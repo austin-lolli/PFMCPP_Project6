@@ -68,7 +68,8 @@ struct T
 struct X                                //4
 {
     T* compare(T* a, T* b) //5
-    {
+    {   
+        FIXME what do we always do before using pointers?
         if( a->value < b->value ) return a;
         if( a->value > b->value ) return b;
         return nullptr;
@@ -80,6 +81,7 @@ struct U
     float first { 0 }, second { 0 };
     float memberUpdate(float* newVal)      //12
     {
+        FIXME what do we always do before using pointers?
         std::cout << "U's first value: " << this->first << std::endl;
         this->first = *newVal;
         std::cout << "U's first updated value: " << this->first << std::endl;
@@ -103,6 +105,7 @@ struct Y
 {
     static float updateAndShorten(U* that, float* newVal )        //10
     {
+        FIXME what do we always do before using pointers?
         std::cout << "U's first value: " << that->first << std::endl;
         that->first = *newVal;
         std::cout << "U's first updated value: " << that->first << std::endl;
@@ -131,7 +134,8 @@ int main()
     T theFool(4,"Son of T");                                             //6
     
     X f;                                            //7
-    auto* smaller = f.compare(&pity, &theFool);                              //8
+    auto* smaller = f.compare(&pity, &theFool);  
+    FIXME what do we always do before using pointers?                            //8
     std::cout << "the smaller one is << " << smaller->name << std::endl; //9
     
     U jrT;

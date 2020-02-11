@@ -69,7 +69,7 @@ struct X                                //4
 {
     T* compare(T* a, T* b) //5
     {   
-        if( a && b )
+        if( a != nullptr && b != nullptr )
         {
             if( a->value < b->value ) return a;
             if( a->value > b->value ) return b;
@@ -83,7 +83,7 @@ struct U
     float first { 0 }, second { 0 };
     float memberUpdate(float* newVal)      //12
     {
-        if( newVal )
+        if( newVal != nullptr )
         {
             std::cout << "U's first value: " << this->first << std::endl;
             this->first = *newVal;
@@ -112,7 +112,7 @@ struct Y
 {
     static float updateAndShorten(U* that, float* newVal )        //10
     {
-        if( that && newVal)
+        if( that != nullptr && newVal != nullptr)
         {
             std::cout << "U's first value: " << that->first << std::endl;
             that->first = *newVal;
@@ -145,7 +145,7 @@ int main()
     
     X f;                                            //7
     auto* smaller = f.compare(&pity, &theFool);  
-    if( smaller )
+    if( smaller != nullptr )
     {
         std::cout << "The smaller value is " << smaller->name << std::endl; //9
     

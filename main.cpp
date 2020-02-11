@@ -56,70 +56,109 @@ Create a branch named Part1
 #include <string>
 struct T
 {
-    T(<#type name#> v, const char* <#variable name#>)   //1
-    //2
-    //3
+    T(int v, const char* w)
+    {
+        this->value = v;
+        this->name = w;
+    }   //1
+    int value;//2
+    std::string name;//3
 };
 
-struct <#structName1#>                                //4
+struct X                                //4
 {
-    <#type name#> compare(<#type name#> a, <#type name#> b) //5
-    {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+    T* compare(T* a, T* b) //5
+    {   
+        if( a != nullptr && b != nullptr )
+        {
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+        }
         return nullptr;
     }
 };
 
 struct U
 {
-    float <#name1#> { 0 }, <#name2#> { 0 };
-    <#returnType#> <#memberFunction#>(<#type name#>* <#updatedValue#>)      //12
+    float first { 0 }, second { 0 };
+    float memberUpdate(float* newVal)      //12
     {
+        if( newVal != nullptr )
+        {
+            std::cout << "U's first value: " << this->first << std::endl;
+            this->first = *newVal;
+            std::cout << "U's first updated value: " << this->first << std::endl;
+            while( std::abs (this->second - this->first) > 0.001f )
+            {
+                if(this->second > this->first)
+                {
+                    this->second -= 0.001f;
+                }
+                else
+                {
+                    this->second += 0.001f;
+                }
+            }
+            std::cout << "U's second updated value: " << this->second << std::endl;
+            return this->second * this->first;
+        }
+        return 0.0f;
         
+
     }
 };
 
-struct <#structname2#>
+struct Y
 {
-    static <#returntype#> <#staticFunctionA#>(U* that, <#type name#>* <#updatedValue#> )        //10
+    static float updateAndShorten(U* that, float* newVal )        //10
     {
-        std::cout << "U's <#name1#> value: " << that-><#name1#> << std::endl;
-        that-><#name1#> = <#updatedValue#>;
-        std::cout << "U's <#name1#> updated value: " << that-><#name1#> << std::endl;
-        while( std::abs(that-><#name2#> - that-><#name1#>) > 0.001f )
+        if( that != nullptr && newVal != nullptr)
         {
-            /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
-             */
-            that-><#name2#> += ;
+            std::cout << "U's first value: " << that->first << std::endl;
+            that->first = *newVal;
+            std::cout << "U's first updated value: " << that->first << std::endl;
+            while( std::abs(that->second - that->first) > 0.001f )
+            {
+                /*
+                 write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+                 */
+                if(that->second > that->first)
+                {
+                    that->second -= 0.001f;
+                }
+                else
+                {
+                    that->second += 0.001f;
+                }
+            }
+            std::cout << "U's second updated value: " << that->second << std::endl;
+            return that->second * that->first;
         }
-        std::cout << "U's <#name2#> updated value: " << that-><#name2#> << std::endl;
-        return that-><#name2#> * that-><#name1#>;
+        return 0.0f;
     }
 };
         
 int main()
 {
-    T <#name1#>( , );                                             //6
-    T <#name2#>( , );                                             //6
+    T pity(6,"Mr T");                                             //6
+    T theFool(4,"Son of T");                                             //6
     
-    <#structName1#> f;                                            //7
-    auto* smaller = f.compare( , );                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    X f;                                            //7
+    auto* smaller = f.compare(&pity, &theFool);  
+    if( smaller != nullptr )
+    {
+        std::cout << "The smaller value is " << smaller->name << std::endl; //9
     
-    U <#name3#>;
-    float updatedValue = 5.f;
-    std::cout << "[static func] <#name3#>'s multiplied values: " << <#structname2#>::<#staticFunctionA#>( , ) << std::endl;                  //11
-    
-    U <#name4#>;
-    std::cout << "[member func] <#name4#>'s multiplied values: " << <#name4#>.<#memberFunction#>( &updatedValue ) << std::endl;
-}
+    }                        //8
+    else
+    {
+        std::cout << "The compared values are equal" << std::endl;
+    }
 
-        
-        
-        
-        
-        
-        
-        
+    U jrT;
+    float updatedValue = 5.f;
+    std::cout << "[static func] jrT's multiplied values: " << Y::updateAndShorten(&jrT, &updatedValue) << std::endl;                  //11
+    
+    U babyT;
+    std::cout << "[member func] babyT's multiplied values: " << babyT.memberUpdate( &updatedValue ) << std::endl;
+}
